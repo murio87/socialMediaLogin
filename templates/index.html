@@ -1,20 +1,29 @@
-{% load socialaccount %}
-<html>
+{% extends 'base.html' %}
 
-<head>
-    <title>Google Registration</title>
-</head>
+{% block content %}
 
-<body>
-    <h1>My Google Login Project</h1>
-    {% if user.is_authenticated %}
-    <p>Welcome, {{ user.username }} !</p>
-
-    {% else %}
-    <h1>My Google Login Project</h1>
-    <a href="{% provider_login_url 'google' %}">Login with Google</a>
-    {% endif %}
-
-</body>
-
-</html>
+	<div class="container">
+		<div class="d-flex flex-column">
+			<h2>Home</h2>
+	<table border=1>
+		<tr>
+			<th>Email</th>
+			<th>First Name</th>
+			<th>Last Name</th>
+			<th>Username</th>
+		</tr>
+		{% for user in users %}
+		<tr>
+			<td>{{user.email}}</td>
+			<td>{{user.first_name}}</td>
+			<td>{{user.last_name}}</td>
+			<td>{{user.username}}</td>
+		</tr>
+		{% endfor %}
+	</table>
+		</div>
+	</div>
+	
+		
+	
+{% endblock %}

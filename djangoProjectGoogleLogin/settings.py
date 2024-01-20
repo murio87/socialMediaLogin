@@ -83,7 +83,7 @@ TEMPLATES = [
         },
     },
 ]
-
+AUTH_USER_MODEL = 'google_login.AccountPeople'
 WSGI_APPLICATION = 'djangoProjectGoogleLogin.wsgi.application'
 
 
