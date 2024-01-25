@@ -51,6 +51,7 @@
 			{% endif %}
     <button class="btn btn-primary w-100 py-2" type="submit">Sign in</button>
   </form><br>
+  <p>Forgot Password? <a href="{% url 'reset_password' %}">Reset</a></p>
   <p>Don't have an account? <a href="{% url 'register' %}">Register Here</a></p>
 <p class="text-center">OR</p>
 <a class="btn btn-info w-100 py-2" href="{% provider_login_url 'google' %}">Login with Google</a>
