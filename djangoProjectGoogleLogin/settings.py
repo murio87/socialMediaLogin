@@ -18,7 +18,6 @@ from django.template.context_processors import media
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
@@ -28,22 +27,23 @@ SECRET_KEY = 'django-insecure-det^yc0)8)nci)!$j2-zkp_lv58u-!n6!)5+t0+o#)(b%4s=kw
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['localhost']
 
 # Application definition
 
 INSTALLED_APPS = [
-    #myapps
+    # myapps
     'google_login',
 
-    #allauthapps
+    # allauthapps
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.github',
 
-    #djangoapps
+    # djangoapps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -86,7 +86,6 @@ TEMPLATES = [
 AUTH_USER_MODEL = 'google_login.AccountPeople'
 WSGI_APPLICATION = 'djangoProjectGoogleLogin.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
@@ -96,7 +95,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -116,7 +114,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -127,7 +124,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
@@ -146,12 +142,13 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend'
 ]
 SITE_ID = 1
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = 'home'
 
 SOCIALACCOUNT_QUERY_EMAIL = True
-ACCOUNT_LOGOUT_ON_GET= True
+ACCOUNT_LOGOUT_ON_GET = True
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_EMAIL_REQUIRED = True
+SOCIALACCOUNT_EMAIL_AUTHENTICATION = False
 
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
@@ -162,10 +159,39 @@ SOCIALACCOUNT_PROVIDERS = {
         'AUTH_PARAMS': {
             'access_type': 'online',
         }
+    },
+    'facebook': {
+        'METHOD': 'oauth2',  # Set to 'js_sdk' to use the Facebook connect SDK
+        # 'SDK_URL': '//connect.facebook.net/{locale}/sdk.js',
+        'SCOPE': ['email', 'public_profile'],
+        'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
+        'INIT_PARAMS': {'cookie': True},
+        'FIELDS': [
+            'id',
+            'first_name',
+            'last_name',
+            'middle_name',
+            'name',
+            'name_format',
+            'picture',
+            'short_name'
+        ],
+        'EXCHANGE_TOKEN': True,
+        # 'LOCALE_FUNC': 'path.to.callable',
+        'VERIFIED_EMAIL': False,
+        'VERSION': 'v13.0',
+        'GRAPH_API_URL': 'https://graph.facebook.com/v13.0',
+    },
+    'github': {
+        'SCOPE': [
+            'user',
+            'repo',
+            'read:org',
+        ],
     }
 }
 
-#SMTP Configuration
+# SMTP Configuration
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
@@ -173,3 +199,12 @@ EMAIL_PORT = '587'
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'kogimurio@gmail.com'
 EMAIL_HOST_PASSWORD = 'kogi@murio'
+
+# client id 20070313698-cnef6ad31225r8tona8fu67i12ig5pib.apps.googleusercontent.com
+# client secret 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
+# app id 1154137549080106
+# app secret 98af5fffe6a93e90ddcf9fff7934b6c0
+#client id 23e04955fe441b682020
+#client secret 1c2417a793ae44d8b29e8a4d9c51000fa26ba197
+
+SOCIALACCOUNT_LOGIN_ON_GET = True
