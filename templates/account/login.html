@@ -54,7 +54,10 @@
   <p>Forgot Password? <a href="{% url 'reset_password' %}">Reset</a></p>
   <p>Don't have an account? <a href="{% url 'register' %}">Register Here</a></p>
 <p class="text-center">OR</p>
-<a class="btn btn-info w-100 py-2" href="{% provider_login_url 'google' %}">Google</a>
+
+<a class="btn btn-info w-100 py-2" href="{% provider_login_url 'google' %}">Login with Google</a><br><br>
+<a class="btn btn-info w-100 py-2" href="{% provider_login_url 'facebook' %}">Login with Facebook</a><br><br>
+<a class="btn btn-info w-100 py-2" href="{% provider_login_url 'github' %}">Login with Github</a>
 </main>
 {% endblock %}
 

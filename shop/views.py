@@ -1,3 +1,6 @@
+from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from .forms import ProductForm
@@ -21,6 +24,7 @@ def shop_home(request):
     return render(request, 'shop/shop_home.html', {'form': form})
 
 
+@staff_member_required
 def delete(request, id):
     product = Product.objects.get(id=id)
     product.delete()
@@ -28,26 +32,27 @@ def delete(request, id):
     return redirect('home')
 
 
-# def update_view_product(request, id):
-# product = Product.objects.get(id=id)
-# if request.method == 'POST':
-# product_name = request.POST.get('name')
-# product_qtty = request.POST.get('qtty')
-# product_price = request.POST.get('price')
-# product_desc = request.POST.get('desc')
-# product_image = request.FILES.get('image')
-# product.name = product_name
-# product.qtty = product_qtty
-# product.price = product_price
-# product.desc = product_desc
-# product.image = product_image
-# product.save()
-# messages.success(request, 'product updated')
-# return redirect('home')
+@staff_member_required
+def update_view_product(request, id):
+    product = Product.objects.get(id=id)
+    if request.POST:
+        product_name = request.POST.get('name')
+        product_qtty = request.POST.get('qtty')
+        product_price = request.POST.get('price')
+        product_desc = request.POST.get('desc')
+        product_image = request.FILES.get('image')
+        product.name = product_name
+        product.qtty = product_qtty
+        product.price = product_price
+        product.desc = product_desc
+        product.image = product_image
+        product.save()
+        messages.success(request, 'product updated')
+        return redirect('home')
+    return render(request, 'shop/update.html', {'product': product})
 
-# return render(request, 'shop/updateProduct.html', {'product': product})
 
-
+@login_required
 def pay(request, id):
     product = Product.objects.get(id=id)
     if request.method == "POST":
@@ -73,3 +78,4 @@ def pay(request, id):
         response = requests.post(api_url, json=request, headers=headers)
         return HttpResponse("success")
     return render(request, 'shop/pay.html', {'product': product})
+

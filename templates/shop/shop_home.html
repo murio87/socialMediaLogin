@@ -6,7 +6,12 @@
 
             <fieldset>
                 <legend class="border-bottom mb-4">Products</legend>
-                {{ form.as_p }}
+                Name: <input type="text" class="form-control" name="name"><br>
+                Quantity: <input type="text" class="form-control" name="qtty"><br>
+                Price: <input type="text" class="form-control" name="price"><br>
+                Description: <input type="text" class="form-control" name="desc"><br>
+                image: <input type="file" class="form-control" name="image"><br>
+
             </fieldset>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-info mt-4">

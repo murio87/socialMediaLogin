@@ -13,7 +13,7 @@ class Product(models.Model):
     qtty = models.CharField(max_length=100, blank=False, null=False)
     price = models.CharField(max_length=100, blank=False, null=False)
     desc = models.CharField(max_length=100, blank=False, null=False)
-    image = models.ImageField(upload_to='media/static/images/shop/')
+    image = models.ImageField(upload_to='media/static/images/shop/', null=True)
 
     def __str__(self):
         return self.name

@@ -6,7 +6,7 @@ from . import views
 urlpatterns = [
     path('shop/', views.shop_home, name='shop'),
     path('delete/<id>', views.delete, name='delete'),
-    #path('update/<id>', views.update_view_product, name='update'),
+    path('update/<id>', views.update_view_product, name='update'),
     path('pay/<id>', views.pay, name='pay'),
 ]
 if settings.DEBUG:
